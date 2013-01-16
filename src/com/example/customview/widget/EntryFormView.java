@@ -55,13 +55,13 @@ public class EntryFormView extends RelativeLayout implements View.OnClickListene
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mNameText.getWindowToken(), 0);
 
-        //Clear the fields
-        mNameText.setText(null);
-        mEmailText.setText(null);
-
         //Notify the listener
         if (mListener != null) {
             mListener.onEntrySubmitted(mNameText.getText(), mEmailText.getText());
         }
+
+        //Clear the fields
+        mNameText.setText(null);
+        mEmailText.setText(null);
     }
 }

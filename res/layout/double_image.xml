@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_launcher"
         android:drawableRight="@drawable/ic_warning"
-        android:spacing="30dp" />
+        android:spacing="30dp"
+        android:background="#AAA"/>
 
 </LinearLayout>
