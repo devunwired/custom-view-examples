@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/name_label"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/name_text"
+        android:layout_alignBottom="@+id/name_text"
+        android:layout_marginRight="5dp"
+        android:gravity="right|center_vertical"
+        android:text="First Name"/>
+    <EditText
+        android:id="@+id/name_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/name_label"
+        android:inputType="textCapWords"
+        android:imeOptions="actionNext"/>
+
+    <TextView
+        android:id="@+id/email_label"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/email_text"
+        android:layout_alignBottom="@+id/email_text"
+        android:layout_marginRight="5dp"
+        android:gravity="right|center_vertical"
+        android:text="Email"/>
+    <EditText
+        android:id="@+id/email_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/email_label"
+        android:layout_below="@id/name_text"
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionDone"/>
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/email_text"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:text="Save Entry" />
+</merge>

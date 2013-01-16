@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.example.customview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.customview.widget.BoxGridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:separatorWidth="2dp">
+
+        <include layout="@layout/box_small" />
+
+        <include layout="@layout/box_small" />
+
+        <include layout="@layout/box_small" />
+
+        <include layout="@layout/box_small" />
+
+        <include layout="@layout/box_small" />
+
+        <include layout="@layout/box_small" />
+
+        <include layout="@layout/box_small" />
+
+        <include layout="@layout/box_small" />
+
+        <include layout="@layout/box_small" />
+
+    </com.example.customview.widget.BoxGridLayout>
+
+</FrameLayout>

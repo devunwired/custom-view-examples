@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DoubleImageView">
+        <attr name="android:drawableLeft" />
+        <attr name="android:drawableRight" />
+        <attr name="android:spacing" />
+    </declare-styleable>
+
+    <declare-styleable name="BoxGridLayout">
+        <attr name="separatorWidth" format="dimension" />
+        <attr name="separatorColor" format="color" />
+    </declare-styleable>
+</resources>
