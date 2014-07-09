@@ -95,42 +95,10 @@ public class DoubleImageView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         //Get the width measurement
-        int specMode = MeasureSpec.getMode(widthMeasureSpec);
-        int specSize = MeasureSpec.getSize(widthMeasureSpec);
-        int widthSize = 0;
-        switch (specMode) {
-            case MeasureSpec.UNSPECIFIED:
-                //Big as we want to be
-                widthSize = getDesiredWidth();
-                break;
-            case MeasureSpec.AT_MOST:
-                //Big as we want to be, up to the spec
-                widthSize = Math.min(getDesiredWidth(), specSize);
-                break;
-            case MeasureSpec.EXACTLY:
-                //Must be the spec size
-                widthSize = specSize;
-                break;
-        }
+        int widthSize = MeasureUtils.getMeasurement(widthMeasureSpec, getDesiredWidth());
 
         //Get the height measurement
-        specMode = MeasureSpec.getMode(heightMeasureSpec);
-        specSize = MeasureSpec.getSize(heightMeasureSpec);
-        int heightSize = 0;
-        switch (specMode) {
-            case MeasureSpec.UNSPECIFIED:
-                //Big as we want to be
-                heightSize = getDesiredHeight();
-                break;
-            case MeasureSpec.AT_MOST:
-                //Big as we want to be, up to the spec
-                heightSize = Math.min(getDesiredHeight(), specSize);
-                break;
-            case MeasureSpec.EXACTLY:
-                //Must be the spec size
-                heightSize = specSize;
-                break;
-        }
+        int heightSize = MeasureUtils.getMeasurement(heightMeasureSpec, getDesiredHeight());
 
         //MUST call this to store the measurements
         setMeasuredDimension(widthSize, heightSize);

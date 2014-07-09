@@ -67,22 +67,10 @@ public class BoxGridLayout extends ViewGroup {
         int widthSize, heightSize;
 
         //Get the width based on the measure specs
-        int specMode = MeasureSpec.getMode(widthMeasureSpec);
-        int specSize =  MeasureSpec.getSize(widthMeasureSpec);
-        if (specMode == MeasureSpec.AT_MOST || specMode == MeasureSpec.EXACTLY) {
-            widthSize = specSize;
-        } else {
-            widthSize = 0;
-        }
+        widthSize = getDefaultSize(0, widthMeasureSpec);
 
         //Get the height based on measure specs
-        specMode = MeasureSpec.getMode(heightMeasureSpec);
-        specSize =  MeasureSpec.getSize(heightMeasureSpec);
-        if (specMode == MeasureSpec.AT_MOST || specMode == MeasureSpec.EXACTLY) {
-            heightSize = specSize;
-        } else {
-            heightSize = 0;
-        }
+        heightSize = getDefaultSize(0, heightMeasureSpec);
 
         int majorDimension = Math.min(widthSize, heightSize);
         //Measure all child views
