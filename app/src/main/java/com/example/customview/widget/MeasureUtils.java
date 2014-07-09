@@ -26,6 +26,16 @@ import android.view.View;
 
 public class MeasureUtils {
 
+    /**
+     * Utility to return a view's standard measurement. Uses the
+     * supplied size when constraints are given. Attempts to
+     * hold to the desired size unless it conflicts with provided
+     * constraints.
+     *
+     * @param measureSpec Constraints imposed by the parent
+     * @param contentSize Desired size for the view
+     * @return The size the view should be.
+     */
     public static int getMeasurement(int measureSpec, int contentSize) {
         int specMode = View.MeasureSpec.getMode(measureSpec);
         int specSize = View.MeasureSpec.getSize(measureSpec);

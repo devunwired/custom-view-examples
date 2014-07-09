@@ -5,11 +5,13 @@
     android:orientation="vertical">
     <com.example.customview.widget.DoubleImageView
         android:id="@+id/image1"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_launcher"
-        android:drawableRight="@drawable/ic_warning"
-        android:spacing="30dp"
-        android:background="#AAA"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:drawableLeft="@drawable/flag_us"
+        android:drawableRight="@drawable/flag_uk"
+        android:textColor="#FFF"
+        android:textSize="32sp"
+        android:text="5 - 5"
+        android:spacing="15dp"/>
 
 </LinearLayout>

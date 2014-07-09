@@ -25,14 +25,27 @@ package com.example.customview.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import com.example.customview.R;
 
 public class DoubleImageView extends View {
 
+    /* Image Contents */
     private Drawable mLeftDrawable, mRightDrawable;
+    /* Text Contents */
+    private CharSequence mText;
+    private StaticLayout mTextLayout;
+    /* Text Drawing */
+    private TextPaint mTextPaint;
+    private Point mTextOrigin;
     private int mSpacing;
 
     public DoubleImageView(Context context) {
@@ -45,6 +58,8 @@ public class DoubleImageView extends View {
 
     public DoubleImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        mTextOrigin = new Point(0, 0);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DoubleImageView, 0, defStyle);
 
@@ -60,6 +75,15 @@ public class DoubleImageView extends View {
 
         int spacing = a.getDimensionPixelSize(R.styleable.DoubleImageView_android_spacing, 0);
         setSpacing(spacing);
+
+        int color = a.getColor(R.styleable.DoubleImageView_android_textColor, 0);
+        mTextPaint.setColor(color);
+
+        int rawSize = a.getDimensionPixelSize(R.styleable.DoubleImageView_android_textSize, 0);
+        mTextPaint.setTextSize(rawSize);
+
+        CharSequence text = a.getText(R.styleable.DoubleImageView_android_text);
+        setText(text);
 
         a.recycle();
     }
@@ -84,6 +108,19 @@ public class DoubleImageView extends View {
         mRightDrawable = right;
         updateContentBounds();
         invalidate();
+    }
+
+    public void setText(int resId) {
+        CharSequence text = getResources().getText(resId);
+        setText(text);
+    }
+
+    public void setText(CharSequence text) {
+        if (!TextUtils.equals(mText, text)) {
+            mText = text;
+            updateContentBounds();
+            invalidate();
+        }
     }
 
     public void setSpacing(int spacing) {
@@ -119,7 +156,14 @@ public class DoubleImageView extends View {
             rightWidth = mRightDrawable.getIntrinsicWidth();
         }
 
-        return (leftWidth + mSpacing + rightWidth);
+        int textWidth;
+        if (mTextLayout == null) {
+            textWidth = 0;
+        } else {
+            textWidth = mTextLayout.getWidth();
+        }
+
+        return (leftWidth + mSpacing + textWidth + mSpacing + rightWidth);
     }
 
     private int getDesiredHeight() {
@@ -141,6 +185,13 @@ public class DoubleImageView extends View {
     }
 
     private void updateContentBounds() {
+        if (mText == null) {
+            mText = "";
+        }
+        float textWidth = mTextPaint.measureText(mText, 0, mText.length());
+        mTextLayout = new StaticLayout(mText, mTextPaint, (int)textWidth,
+                Layout.Alignment.ALIGN_CENTER, 1f, 0f, true);
+
         int left = (getWidth() - getDesiredWidth()) / 2;
         int top;
 
@@ -150,8 +201,18 @@ public class DoubleImageView extends View {
                     left + mLeftDrawable.getIntrinsicWidth(), top + mLeftDrawable.getIntrinsicHeight());
 
             left += mLeftDrawable.getIntrinsicWidth();
-            left += mSpacing;
         }
+
+        left += mSpacing;
+
+        if (mTextLayout != null) {
+            top = (getHeight() - mTextLayout.getHeight()) / 2;
+            mTextOrigin.set(left, top);
+
+            left += textWidth;
+        }
+
+        left += mSpacing;
 
         if (mRightDrawable != null) {
             top = (getHeight() - mRightDrawable.getIntrinsicHeight()) / 2;
@@ -172,6 +233,16 @@ public class DoubleImageView extends View {
         if (mLeftDrawable != null) {
             mLeftDrawable.draw(canvas);
         }
+
+        if (mTextLayout != null) {
+            canvas.save();
+            canvas.translate(mTextOrigin.x, mTextOrigin.y);
+
+            mTextLayout.draw(canvas);
+
+            canvas.restore();
+        }
+
         if (mRightDrawable != null) {
             mRightDrawable.draw(canvas);
         }
