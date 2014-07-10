@@ -163,7 +163,7 @@ public class DoubleImageView extends View {
             textWidth = mTextLayout.getWidth();
         }
 
-        return (leftWidth + mSpacing + textWidth + mSpacing + rightWidth);
+        return (int)(leftWidth * 0.67f) + (int)(rightWidth * 0.67f) + mSpacing + textWidth;
     }
 
     private int getDesiredHeight() {
@@ -181,7 +181,7 @@ public class DoubleImageView extends View {
             rightHeight = mRightDrawable.getIntrinsicHeight();
         }
 
-        return Math.max(leftHeight, rightHeight);
+        return (int)(leftHeight * 0.67f) + (int)(rightHeight * 0.67f);
     }
 
     private void updateContentBounds() {
@@ -193,31 +193,26 @@ public class DoubleImageView extends View {
                 Layout.Alignment.ALIGN_CENTER, 1f, 0f, true);
 
         int left = (getWidth() - getDesiredWidth()) / 2;
-        int top;
+        int top = (getHeight() - getDesiredHeight()) / 2;
 
         if (mLeftDrawable != null) {
-            top = (getHeight() - mLeftDrawable.getIntrinsicHeight()) / 2;
             mLeftDrawable.setBounds(left, top,
                     left + mLeftDrawable.getIntrinsicWidth(), top + mLeftDrawable.getIntrinsicHeight());
 
-            left += mLeftDrawable.getIntrinsicWidth();
+            left += (mLeftDrawable.getIntrinsicWidth() * 0.33f);
+            top += (mLeftDrawable.getIntrinsicHeight() * 0.33f);
         }
 
-        left += mSpacing;
+        if (mRightDrawable != null) {
+            mRightDrawable.setBounds(left, top,
+                    left + mRightDrawable.getIntrinsicWidth(), top + mRightDrawable.getIntrinsicHeight());
+
+            left = mRightDrawable.getBounds().right + mSpacing;
+        }
 
         if (mTextLayout != null) {
             top = (getHeight() - mTextLayout.getHeight()) / 2;
             mTextOrigin.set(left, top);
-
-            left += textWidth;
-        }
-
-        left += mSpacing;
-
-        if (mRightDrawable != null) {
-            top = (getHeight() - mRightDrawable.getIntrinsicHeight()) / 2;
-            mRightDrawable.setBounds(left, top,
-                    left + mRightDrawable.getIntrinsicWidth(), top + mRightDrawable.getIntrinsicHeight());
         }
     }
 
