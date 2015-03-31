@@ -12,5 +12,6 @@
     <declare-styleable name="BoxGridLayout">
         <attr name="separatorWidth" format="dimension" />
         <attr name="separatorColor" format="color" />
+        <attr name="numColumns" format="integer" />
     </declare-styleable>
 </resources>

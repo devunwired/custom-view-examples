@@ -34,9 +34,12 @@ import com.example.customview.R;
 
 public class BoxGridLayout extends ViewGroup {
 
-    private static final int COUNT = 3;
+    private static final int DEFAULT_COUNT = 3;
 
     private Paint mGridPaint;
+
+    private int mColumnCount;
+    private int mMaxChildren;
 
     public BoxGridLayout(Context context) {
         this(context, null);
@@ -53,6 +56,8 @@ public class BoxGridLayout extends ViewGroup {
 
         int strokeWidth = a.getDimensionPixelSize(R.styleable.BoxGridLayout_separatorWidth, 0);
         int strokeColor = a.getColor(R.styleable.BoxGridLayout_separatorColor, Color.WHITE);
+        mColumnCount = a.getInteger(R.styleable.BoxGridLayout_numColumns, DEFAULT_COUNT);
+        mMaxChildren = mColumnCount * mColumnCount;
 
         a.recycle();
 
@@ -74,7 +79,7 @@ public class BoxGridLayout extends ViewGroup {
 
         int majorDimension = Math.min(widthSize, heightSize);
         //Measure all child views
-        int blockDimension = majorDimension / COUNT;
+        int blockDimension = majorDimension / mColumnCount;
         int blockSpec = MeasureSpec.makeMeasureSpec(blockDimension, MeasureSpec.EXACTLY);
         measureChildren(blockSpec, blockSpec);
 
@@ -86,8 +91,8 @@ public class BoxGridLayout extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int row, col, left, top;
         for (int i=0; i < getChildCount(); i++) {
-            row = i / COUNT;
-            col = i % COUNT;
+            row = i / mColumnCount;
+            col = i % mColumnCount;
             View child = getChildAt(i);
             left = col * child.getMeasuredWidth();
             top = row * child.getMeasuredHeight();
@@ -102,18 +107,18 @@ public class BoxGridLayout extends ViewGroup {
         super.dispatchDraw(canvas);
 
         //Draw the grid lines
-        for (int i=0; i <= getWidth(); i += (getWidth() / COUNT)) {
+        for (int i=0; i <= getWidth(); i += (getWidth() / mColumnCount)) {
             canvas.drawLine(i, 0, i, getHeight(), mGridPaint);
         }
-        for (int i=0; i <= getHeight(); i += (getHeight() / COUNT)) {
+        for (int i=0; i <= getHeight(); i += (getHeight() / mColumnCount)) {
             canvas.drawLine(0, i, getWidth(), i, mGridPaint);
         }
     }
 
     @Override
     public void addView(View child) {
-        if (getChildCount() > 8) {
-            throw new IllegalStateException("BoxGridLayout cannot have more than 9 direct children");
+        if (getChildCount() > mMaxChildren-1) {
+            throw new IllegalStateException("BoxGridLayout cannot have more than "+mMaxChildren+" direct children");
         }
 
         super.addView(child);
@@ -121,8 +126,8 @@ public class BoxGridLayout extends ViewGroup {
 
     @Override
     public void addView(View child, int index) {
-        if (getChildCount() > 8) {
-            throw new IllegalStateException("BoxGridLayout cannot have more than 9 direct children");
+        if (getChildCount() > mMaxChildren-1) {
+            throw new IllegalStateException("BoxGridLayout cannot have more than "+mMaxChildren+" direct children");
         }
 
         super.addView(child, index);
@@ -130,8 +135,8 @@ public class BoxGridLayout extends ViewGroup {
 
     @Override
     public void addView(View child, int index, LayoutParams params) {
-        if (getChildCount() > 8) {
-            throw new IllegalStateException("BoxGridLayout cannot have more than 9 direct children");
+        if (getChildCount() > mMaxChildren-1) {
+            throw new IllegalStateException("BoxGridLayout cannot have more than "+mMaxChildren+" direct children");
         }
 
         super.addView(child, index, params);
@@ -139,8 +144,8 @@ public class BoxGridLayout extends ViewGroup {
 
     @Override
     public void addView(View child, LayoutParams params) {
-        if (getChildCount() > 8) {
-            throw new IllegalStateException("BoxGridLayout cannot have more than 9 direct children");
+        if (getChildCount() > mMaxChildren-1) {
+            throw new IllegalStateException("BoxGridLayout cannot have more than "+mMaxChildren+" direct children");
         }
 
         super.addView(child, params);
@@ -148,8 +153,8 @@ public class BoxGridLayout extends ViewGroup {
 
     @Override
     public void addView(View child, int width, int height) {
-        if (getChildCount() > 8) {
-            throw new IllegalStateException("BoxGridLayout cannot have more than 9 direct children");
+        if (getChildCount() > mMaxChildren-1) {
+            throw new IllegalStateException("BoxGridLayout cannot have more than "+mMaxChildren+" direct children");
         }
 
         super.addView(child, width, height);
