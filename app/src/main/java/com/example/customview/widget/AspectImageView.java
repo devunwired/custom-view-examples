@@ -59,7 +59,7 @@ public class AspectImageView extends ImageView {
             aspect = (float) d.getIntrinsicWidth() / (float) d.getIntrinsicHeight();
         }
         //Get the width based on the measure specs
-        int widthSize = MeasureUtils.getMeasurement(widthMeasureSpec, desiredSize);
+        int widthSize = resolveSize(desiredSize, widthMeasureSpec);
 
         //Calculate height based on aspect
         int heightSize = (int)(widthSize / aspect);
