@@ -25,6 +25,7 @@ package com.example.customview.widget;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 
 /**
@@ -59,7 +60,7 @@ public class AspectImageView extends ImageView {
             aspect = (float) d.getIntrinsicWidth() / (float) d.getIntrinsicHeight();
         }
         //Get the width based on the measure specs
-        int widthSize = resolveSize(desiredSize, widthMeasureSpec);
+        int widthSize = View.resolveSize(desiredSize, widthMeasureSpec);
 
         //Calculate height based on aspect
         int heightSize = (int)(widthSize / aspect);
