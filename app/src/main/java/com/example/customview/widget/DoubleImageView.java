@@ -132,10 +132,10 @@ public class DoubleImageView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         //Get the width measurement
-        int widthSize = MeasureUtils.getMeasurement(widthMeasureSpec, getDesiredWidth());
+        int widthSize = resolveSize(getDesiredWidth(), widthMeasureSpec);
 
         //Get the height measurement
-        int heightSize = MeasureUtils.getMeasurement(heightMeasureSpec, getDesiredHeight());
+        int heightSize = resolveSize(getDesiredHeight(), heightMeasureSpec);
 
         //MUST call this to store the measurements
         setMeasuredDimension(widthSize, heightSize);
