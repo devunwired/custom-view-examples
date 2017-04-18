@@ -1,4 +1,4 @@
-#Custom View Examples#
+# Custom View Examples #
 
 This repository contains a series of sample code designed to highlight applications of creating custom Views and ViewGroups. Examples include:
 
@@ -7,7 +7,7 @@ This repository contains a series of sample code designed to highlight applicati
  - Custom View
  - Custom ViewGroup
 
-##License##
+## License ##
 
 **The code supplied here is covered under the MIT Open Source License:**
 
